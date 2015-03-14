@@ -40,7 +40,7 @@ function! s:Move( direction, count, mode )
 	    " Note: Branches are ordered from specific to unspecific so that
 	    " in case of multiple matches, the more specific (and usually
 	    " longer) one it used. 
-	    call search( '\d\+\|\u\+\ze\%(\u\l\|\d\)\|\l\+\ze\%(\u\|\d\)\|\u\l\+\|\%(\a\|\d\)\+\ze_\|\%(\k\@!\S\)\+\|\%(_\@!\k\)\+\>', 'We' )
+	    call search( '\u\+\ze\%(\u\l\)\|\l\+\ze\%(\u\)\|\u\l\+\|\%(\a\|\d\)\+\ze_\|\%(\k\@!\S\)\+\|\%(_\@!\k\)\+\>', 'We' )
 	    " Note: word must be defined as '\k\>'; '\>' on its own somehow
 	    " dominates over the previous branch. Plus, \k must exclude the
 	    " underscore, or a trailing one will be incorrectly moved over:
@@ -84,7 +84,7 @@ function! s:Move( direction, count, mode )
 	    " word | empty line | non-keyword after whitespaces | non-whitespace after word | number | start of ACRONYM followed by CamelCase or number | CamelCase | underscore followed by ACRONYM, Camel, lowercase or number
 	    " Note: Branches are ordered from unspecific to specific, so that
 	    " the cursor moves the least amount of text. 
-	    call search( '\<\D\|^$\|\%(^\|\s\)\+\zs\k\@!\S\|\>\S\|\d\+\|\u\@<!\u\+\ze\%(\u\l\|\d\)\|\u\l\+\|_\zs\%(\u\+\|\u\l\+\|\l\+\|\d\+\)', 'W' . l:direction )
+	    call search( '\<\D\|^$\|\%(^\|\s\)\+\zs\k\@!\S\|\>\S\|\u\@<!\u\+\ze\%(\u\l\)\|\u\l\+\|_\zs\%(\u\+\|\u\l\+\|\l\+\|\d\+\)', 'W' . l:direction )
 	    " Note: word must be defined as '\<\D' to avoid that a word like
 	    " 1234Test is moved over as [1][2]34[T]est instead of [1]234[T]est
 	    " because \< matches with zero width, and \d\+ will then start
